@@ -13,6 +13,21 @@ class Model:
         importo medio per bonifico >= threshold (euro)
         """
         # TODO
+        print(threshold, ' thresold')
+        dao = DAO()
+        lista_di_liste = dao.get_filiali()
+        lista_formattata=[]
+        stringa=''
+        i=0
+        for lista_singola in lista_di_liste:
+
+            if int(lista_singola[2])>=int(threshold):
+                self.G.add_edge(lista_singola[0], lista_singola[1], peso=int(lista_singola[2]))
+                i+=1
+                stringa=(f'{i}) [{lista_singola[0]} -> {lista_singola[1]}] -- Importo medio per bonifico: ${lista_singola[2]}')
+                lista_formattata.append(stringa)
+
+        return lista_formattata
 
     def get_num_edges(self):
         """
@@ -20,6 +35,8 @@ class Model:
         :return: numero di edges del grafo
         """
         # TODO
+        numero_collegamenti=self.G.number_of_edges()
+        return numero_collegamenti
 
     def get_num_nodes(self):
         """

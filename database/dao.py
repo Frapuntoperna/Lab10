@@ -19,9 +19,8 @@ class DAO:
 
     def get_filiali(self):
 
-        db = DBConnect()
 
-        cnx = db.get_connection()
+        cnx = DBConnect.get_connection()
 
         if cnx is not None:
             print('cnx is not None')
@@ -33,17 +32,16 @@ class DAO:
             cursor = cnx.cursor()
             cursor.execute(query)
 
-            lista_filiali = []
+            self.lista_filiali = []
             for row in cursor:
                 media = (row[2]/row[3])
                 coppia=[row[0], row[1], media]
-                lista_filiali.append(coppia)
+                self.lista_filiali.append(coppia)
 
             cursor.close()
             cnx.close()
-            print(f'lista_filiali dao {lista_filiali}')
+            print(f'lista_filiali dao {self.lista_filiali}')
         else:
             print('cnx is None')
 
-
-        return lista_filiali
+        return self.lista_filiali

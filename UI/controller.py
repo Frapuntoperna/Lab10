@@ -17,3 +17,20 @@ class Controller:
         * Lista di Collegamenti che superano l'importo indicato come soglia
         """
         # TODO
+        if self._view.importo_medio_minimo.value is not str:
+
+            self._view.lista_visualizzazione.controls.clear()
+
+
+
+            lista_collegamenti=self._model.costruisci_grafo(self._view.importo_medio_minimo.value)
+
+            self._view.lista_visualizzazione.controls.append(ft.Text(str(f'Numero di Collegamenti: {len(lista_collegamenti)}')))
+
+            for collegamento in lista_collegamenti:
+                self._view.lista_visualizzazione.controls.append(ft.Text(str(collegamento)))
+
+            self._view.update()
+
+        else:
+            print('importo medio non è un intero')
