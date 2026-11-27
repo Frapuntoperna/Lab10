@@ -21,13 +21,21 @@ class Controller:
 
             self._view.lista_visualizzazione.controls.clear()
 
+            self._model.costruisci_grafo(self._view.importo_medio_minimo.value)
 
+            # funzione get_num_nudes
+            numero_filiali = int(self._model.get_num_nodes())
+            self._view.lista_visualizzazione.controls.append(
+                ft.Text(str(f'Numero di Filiali: {numero_filiali}')))
 
-            lista_collegamenti=self._model.costruisci_grafo(self._view.importo_medio_minimo.value)
+            #funzione get_num_edge
+            numero_collegamenti=int(self._model.get_num_edges())
+            self._view.lista_visualizzazione.controls.append(
+                ft.Text(str(f'Numero di Collegamenti: {numero_collegamenti}')))
 
-            self._view.lista_visualizzazione.controls.append(ft.Text(str(f'Numero di Collegamenti: {len(lista_collegamenti)}')))
+            #funzione get_all_edge STAMPA COLLEGAMENTI
 
-            for collegamento in lista_collegamenti:
+            for collegamento in self._model.get_all_edges():
                 self._view.lista_visualizzazione.controls.append(ft.Text(str(collegamento)))
 
             self._view.update()

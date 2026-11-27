@@ -24,7 +24,7 @@ class DAO:
 
         if cnx is not None:
             print('cnx is not None')
-            query=('''select distinct f1.nome, f2.nome, sum(importo), count(*)
+            query=('''select distinct f1.nome, f2.nome, f1.provincia, f2.provincia, (sum(importo)/count(*)) as media
                     from bonifico b, filiale f1, filiale f2
                     where b.id_filiale_destinazione =f2.id and b.id_filiale_origine = f1.id
                     group by b.id_filiale_origine, b.id_filiale_destinazione''')
@@ -34,13 +34,15 @@ class DAO:
 
             self.lista_filiali = []
             for row in cursor:
-                media = (row[2]/row[3])
-                coppia=[row[0], row[1], media]
+                media = row[4]
+                filiale_origine=(f'{row[0]} ({row[2]})')
+                filiale_destinazione=(f'{row[1]} ({row[3]})')
+                coppia=[filiale_origine, filiale_destinazione, media]
                 self.lista_filiali.append(coppia)
 
             cursor.close()
             cnx.close()
-            print(f'lista_filiali dao {self.lista_filiali}')
+            #print(f'lista_filiali dao {self.lista_filiali}')
         else:
             print('cnx is None')
 
